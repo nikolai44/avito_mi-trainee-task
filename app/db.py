@@ -1,6 +1,6 @@
 import logging
 from motor.motor_asyncio import AsyncIOMotorClient
-from .settings import MONGODB_URL, MAX_CONNECTIONS_COUNT, MIN_CONNECTIONS_COUNT
+from settings import MONGODB_URL, MAX_CONNECTIONS_COUNT, MIN_CONNECTIONS_COUNT
 
 
 class DataBase:
@@ -22,8 +22,6 @@ async def close_mongo_connection():
     logging.info("start db closing")
     db.client.close()
     logging.info("db closed")
-
-
 
 
 async def get_database() -> AsyncIOMotorClient:

@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 
 import settings
 from router import api_router
+from db import connect_to_mongo, close_mongo_connection
 
 docs_kwargs = {}  # noqa: pylint=invalid-name
 if settings.ENVIRONMENT == 'production':
@@ -9,8 +10,8 @@ if settings.ENVIRONMENT == 'production':
 
 app = FastAPI(**docs_kwargs)
 
-# app.add_event_handler("startup", connect_to_mongo)
-# app.add_event_handler("shutdown", close_mongo_connection)
+app.add_event_handler("startup", connect_to_mongo)
+app.add_event_handler("shutdown", close_mongo_connection)
 #
 # app.add_exception_handler(HTTPException, http_error_handler)
 # app.add_exception_handler(HTTP_422_UNPROCESSABLE_ENTITY, http_422_error_handler)
