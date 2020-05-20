@@ -26,5 +26,5 @@ async def retrieve(
 	"""get secret by secret_id"""
 	secret_value = await get_secret(secret_id, secret, db)
 	if secret_value is None:
-		raise HTTPException(status_code=404, detail="Note not found")
+		raise HTTPException(status_code=404, detail="Unknown secret")
 	return secret_value
