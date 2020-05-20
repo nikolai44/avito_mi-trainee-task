@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends
-from models import Secret
+from fastapi import APIRouter, Depends, HTTPException
+from models import SecretInCreating, SecretInRetrieving
 from secret import create_secret, get_secret
 from motor.motor_asyncio import AsyncIOMotorClient
 from db import get_database
@@ -9,7 +9,7 @@ api_router = APIRouter()
 
 @api_router.post("/generate")
 async def create(
-		secret: Secret,
+		secret: SecretInCreating,
 		db: AsyncIOMotorClient = Depends(get_database),
 ):
 	"""create new secret"""
@@ -19,9 +19,12 @@ async def create(
 
 @api_router.post("/secret/{secret_id}")
 async def retrieve(
-		secret_key: str,
-		passphrase: str,
+		secret_id: str,
+		secret: SecretInRetrieving,
 		db: AsyncIOMotorClient = Depends(get_database)
 ):
 	"""get secret by secret_id"""
-	secret = get_secret(secret_key, passphrase, db)
+	secret_value = await get_secret(secret_id, secret, db)
+	if secret_value is None:
+		raise HTTPException(status_code=404, detail="Note not found")
+	return secret_value
