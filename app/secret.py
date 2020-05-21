@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from typing import Optional
 
 
-async def create_secret(secret: SecretInCreating, conn: AsyncIOMotorClient) -> str:
+async def create_secret(secret: SecretInCreating, conn: AsyncIOMotorClient) -> dict:
 	salt = generate_salt()
 	aes = AESCipher(secret.passphrase)
 	secret_db = {
@@ -17,7 +17,7 @@ async def create_secret(secret: SecretInCreating, conn: AsyncIOMotorClient) -> s
 		'crypted_secret': aes.encrypt(secret.secret)
 	}
 	answer = await conn[db_name][secret_collection_name].insert_one(secret_db)
-	return str(answer.inserted_id)
+	return {'secret_key': str(answer.inserted_id)}
 
 
 async def get_secret(secret_id: str, secret: SecretInRetrieving, conn: AsyncIOMotorClient) -> Optional[dict]:
