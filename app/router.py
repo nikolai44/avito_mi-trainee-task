@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Path
 from models import SecretInCreating, SecretInRetrieving
 from secret import create_secret, get_secret
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -19,8 +19,8 @@ async def create(
 
 @api_router.post("/secret/{secret_id}")
 async def retrieve(
-		secret_id: str,
 		secret: SecretInRetrieving,
+		secret_id: str = Path(..., regex="^[0-9a-fA-F]{24}$"),
 		db: AsyncIOMotorClient = Depends(get_database)
 ):
 	"""get secret by secret_id"""
