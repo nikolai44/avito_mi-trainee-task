@@ -9,3 +9,11 @@ class SecretInCreating(BaseModel):
 
 class SecretInRetrieving(BaseModel):
 	passphrase: str
+
+
+class SecretOutCreating(BaseModel):
+	secret_key: str
+
+
+class SecretOutRetrieving(BaseModel):
+	secret: str
