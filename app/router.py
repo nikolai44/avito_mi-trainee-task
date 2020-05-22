@@ -21,8 +21,8 @@ async def create(
 
 
 @api_router.post("/secret/{secret_id}",
-				 responses={404: {"description": "Secret not found"}},
-				 response_model=SecretOutRetrieving)
+				responses={404: {"description": "Secret not found"}},
+				response_model=SecretOutRetrieving)
 async def retrieve(
 		secret: SecretInRetrieving,
 		secret_id: str = Path(..., regex="^[0-9a-fA-F]{24}$"),

@@ -1,8 +1,8 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from settings import db_name, secret_collection_name
-from security import generate_salt, get_password_hash, verify_password
-from models import SecretInCreating
-from aes_encryption import AESCipher
+from app.settings import db_name, secret_collection_name
+from app.security import generate_salt, get_password_hash, verify_password
+from app.models import SecretInCreating
+from app.aes_encryption import AESCipher
 from bson.objectid import ObjectId
 from typing import Optional
 
@@ -39,4 +39,4 @@ async def get_secret_by_objectid(secret_id: str, conn: AsyncIOMotorClient) -> Op
 
 
 async def delete_secret_by_objectid(secret_id: str, conn: AsyncIOMotorClient) -> None:
-	return await conn[db_name][secret_collection_name].delete_one(filter={'_id': ObjectId(secret_id)})
+	await conn[db_name][secret_collection_name].delete_one(filter={'_id': ObjectId(secret_id)})
