@@ -1,8 +1,8 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from app.settings import db_name, secret_collection_name
-from app.security import generate_salt, get_password_hash, verify_password
-from app.models import SecretInCreating
-from app.aes_encryption import AESCipher
+from settings import db_name, secret_collection_name
+from security import generate_salt, get_password_hash, verify_password
+from models import SecretInCreating
+from aes_encryption import AESCipher
 from bson.objectid import ObjectId
 from typing import Optional
 

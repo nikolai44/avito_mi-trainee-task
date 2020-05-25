@@ -1,8 +1,8 @@
 import sys
 sys.path.append("./../app")
-from app.secret import crypt_secret, decrypt_secret, save_secret_to_db,\
+from secret import crypt_secret, decrypt_secret, save_secret_to_db,\
 	get_secret_by_objectid, delete_secret_by_objectid
-from app.models import SecretInCreating
+from models import SecretInCreating
 
 
 def test_decrypt_secret():
